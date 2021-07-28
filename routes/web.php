@@ -21,4 +21,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::prefix('/course')->group(function () {
+    Route::get('/create', ["App\Http\Controllers\CourseController", 'create'])->name('course.create');
+    Route::post('/create', ["App\Http\Controllers\CourseController", 'store'])->name('course.store');
+    Route::get('/index', ["App\Http\Controllers\CourseController", 'index'])->name('course.index');
+});
+
 require __DIR__.'/auth.php';
