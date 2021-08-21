@@ -24,6 +24,7 @@ class CourseRequest extends FormRequest
     public function rules()
     {
         return [
+            'id'          => 'integer',
             'name'        => 'required|max:50',
             'description' => 'required|max:255'
         ];

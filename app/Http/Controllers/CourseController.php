@@ -30,16 +30,19 @@ class CourseController extends Controller
      * @param CourseRequest $req
      */
     public function store(CourseRequest $req){
-        $isSaved = CourseCreateService::create($req);
+        if($req->get('id')){
+            $isSaved = CourseCreateService::update($req);
+        }else{
+            $isSaved = CourseCreateService::create($req);
+        }
         if($isSaved){
             return back();
         }
         return redirect()->route('course.index');
     }
 
-    public function update(CourseRequest $req){
-        $course = CourseCreateService::update($req);
-        return back();
+    public function update(Request $req, $id){
+        return view('course.update', ['course' => Course::findOrFail($id)]);
     }
 
     public function delete(Request $req){

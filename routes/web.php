@@ -23,9 +23,9 @@ Route::get('/dashboard', function () {
 
 Route::prefix('/course')->group(function () {
     Route::get('/create', ["App\Http\Controllers\CourseController", 'create'])->name('course.create');
-    Route::post('/update', ["App\Http\Controllers\CourseController", 'update'])->name('course.update');
-    Route::post('/delete', ["App\Http\Controllers\CourseController", 'delete'])->name('course.delete');
-    Route::post('/create', ["App\Http\Controllers\CourseController", 'store'])->name('course.store');
+    Route::get('/{id}/update', ["App\Http\Controllers\CourseController", 'update'])->name('course.update');
+    Route::post('/{id}/delete', ["App\Http\Controllers\CourseController", 'delete'])->name('course.delete');
+    Route::post('/save', ["App\Http\Controllers\CourseController", 'store'])->name('course.store');
     Route::get('/index', ["App\Http\Controllers\CourseController", 'index'])->name('course.index');
 });
 
