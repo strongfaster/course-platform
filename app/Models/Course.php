@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     use HasFactory;
+
+    /**
+     * @var string[]
+     */
+    public $fillable = [
+            'name',
+            'description'
+        ];
 }

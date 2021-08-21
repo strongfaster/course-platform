@@ -25,7 +25,7 @@ class CourseRequest extends FormRequest
     {
         return [
             'name'        => 'required|max:50',
-            'description' => 'max:255'
+            'description' => 'required|max:255'
         ];
     }
 }

@@ -26,7 +26,23 @@ class CourseController extends Controller
         return view('course.index', ['courses' => Course::all()]);
     }
 
-    public function store(Request $req){
-        CourseCreateService::create(CourseRequest::createFrom($req));
+    /**
+     * @param CourseRequest $req
+     */
+    public function store(CourseRequest $req){
+        $isSaved = CourseCreateService::create($req);
+        if($isSaved){
+            return back();
+        }
+        return redirect()->route('course.index');
+    }
+
+    public function update(CourseRequest $req){
+        $course = CourseCreateService::update($req);
+        return back();
+    }
+
+    public function delete(Request $req){
+        CourseCreateService::delete(CourseRequest::createFrom($req));
     }
 }

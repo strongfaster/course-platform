@@ -3,5 +3,5 @@
 @section('title','Create course')
 
 @section('content')
-    @include('course.form')
+    @include('course.form', ['route' => route('course.store')])
 @endsection
