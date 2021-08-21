@@ -45,7 +45,8 @@ class CourseController extends Controller
         return view('course.update', ['course' => Course::findOrFail($id)]);
     }
 
-    public function delete(Request $req){
-        CourseCreateService::delete(CourseRequest::createFrom($req));
+    public function delete(Request $req, $id){
+        CourseCreateService::delete($id);
+        return redirect()->route('course.index');
     }
 }

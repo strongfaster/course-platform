@@ -32,12 +32,17 @@ class CourseCreateService extends BaseService
             $course = Course::findOrFail($request->get('id'));
             if($course){
                 $course->update($validData);
-                return $course;
             }
+            return $course;
         }
+        return false;
     }
 
-    public static function delete(CourseRequest $request){
-
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public static function delete($id){
+        return Course::findOrFail($id)->delete();
     }
 }

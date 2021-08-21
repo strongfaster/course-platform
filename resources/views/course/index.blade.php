@@ -23,6 +23,7 @@
                         <td>{{$course->description}}</td>
                         <td>
                             <a href="{{route('course.update', ['id' => $course->id])}}" class="btn btn-primary">{{__('Update')}}</a>
+                            <a href="{{route('course.delete', ['id' => $course->id])}}" class="btn btn-danger">{{__('Delete')}}</a>
                         </td>
                     </tr>
                     @endforeach
