@@ -21,13 +21,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::prefix('/course')->group(function () {
-    Route::get('/create', ["App\Http\Controllers\CourseController", 'create'])->name('course.create');
-    Route::get('/{id}/update', ["App\Http\Controllers\CourseController", 'update'])->name('course.update');
-    Route::get('/{id}/delete', ["App\Http\Controllers\CourseController", 'delete'])->name('course.delete');
-    Route::post('/save', ["App\Http\Controllers\CourseController", 'store'])->name('course.store');
-    Route::get('/index', ["App\Http\Controllers\CourseController", 'index'])->name('course.index');
-});
+Route::resource('course', 'App\Http\Controllers\CourseController');
 
 require __DIR__.'/auth.php';
 

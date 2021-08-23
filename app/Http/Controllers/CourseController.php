@@ -2,51 +2,108 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CourseRequest;
 use App\Models\Course;
-use App\Services\Course\CourseCreateService;
 use Illuminate\Http\Request;
 
+/**
+ * Class CourseController
+ * @package App\Http\Controllers
+ */
 class CourseController extends Controller
 {
     /**
-     * @param Request $req
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function create(Request $req){
-        return view('course.create');
-    }
+    public function index()
+    {
+        $courses = Course::paginate();
 
-
-    /**
-     * @param Request $req
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function index(Request $req){
-        return view('course.index', ['courses' => Course::all()]);
+        return view('course.index', compact('courses'))
+            ->with('i', (request()->input('page', 1) - 1) * $courses->perPage());
     }
 
     /**
-     * @param CourseRequest $req
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function store(CourseRequest $req){
-        if($req->get('id')){
-            $isSaved = CourseCreateService::update($req);
-        }else{
-            $isSaved = CourseCreateService::create($req);
-        }
-        if($isSaved){
-            return back();
-        }
-        return redirect()->route('course.index');
+    public function create()
+    {
+        $course = new Course();
+        return view('course.create', compact('course'));
     }
 
-    public function update(Request $req, $id){
-        return view('course.update', ['course' => Course::findOrFail($id)]);
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        request()->validate(Course::$rules);
+
+        $course = Course::create($request->all());
+
+        return redirect()->route('course.index')
+            ->with('success', 'Course created successfully.');
     }
 
-    public function delete(Request $req, $id){
-        CourseCreateService::delete($id);
-        return redirect()->route('course.index');
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $course = Course::find($id);
+
+        return view('course.show', compact('course'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $course = Course::find($id);
+
+        return view('course.edit', compact('course'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  Course $course
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Course $course)
+    {
+        request()->validate(Course::$rules);
+
+        $course->update($request->all());
+
+        return redirect()->route('course.index')
+            ->with('success', 'Course updated successfully');
+    }
+
+    /**
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function destroy($id)
+    {
+        $course = Course::find($id)->delete();
+
+        return redirect()->route('course.index')
+            ->with('success', 'Course deleted successfully');
     }
 }

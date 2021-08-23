@@ -2,18 +2,37 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Course
+ *
+ * @property $id
+ * @property $name
+ * @property $description
+ * @property $created_at
+ * @property $updated_at
+ *
+ * @package App
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ */
 class Course extends Model
 {
-    use HasFactory;
+    
+    static $rules = [
+		'name' => 'required',
+		'description' => 'required',
+    ];
+
+    protected $perPage = 20;
 
     /**
-     * @var string[]
+     * Attributes that should be mass-assignable.
+     *
+     * @var array
      */
-    public $fillable = [
-            'name',
-            'description'
-        ];
+    protected $fillable = ['name','description'];
+
+
+
 }

@@ -1,19 +1,19 @@
-<div class="row">
-    <div class="col-6 offset-3">
-        @if($errors)
-            <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-            </ul>
-        @endif
-        <form method="POST" action="{{$route}}">
-            @csrf
-            <label for="name">{{__('Name')}}</label>
-            <input type="text" name="name" class="form-control" value="{{ $course->name ?? old('name')}}">
-            <label for="description">{{__('Description')}}</label>
-            <input type="text" name="description" class="form-control" value="{{$course->description ?? old('description')}}">
-            <input type="submit" value="{{__('Save')}}" class="btn btn-outline-success mt-2">
-        </form>
+<div class="box box-info padding-1">
+    <div class="box-body">
+        
+        <div class="form-group">
+            {{ Form::label('name') }}
+            {{ Form::text('name', $course->name, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Name']) }}
+            {!! $errors->first('name', '<div class="invalid-feedback">:message</p>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('description') }}
+            {{ Form::text('description', $course->description, ['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Description']) }}
+            {!! $errors->first('description', '<div class="invalid-feedback">:message</p>') !!}
+        </div>
+
+    </div>
+    <div class="box-footer mt20">
+        <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </div>
